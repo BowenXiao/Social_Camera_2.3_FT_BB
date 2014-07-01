@@ -274,6 +274,7 @@ class SetOption():
         y_1 = self._getSettingBounds()[2] - self._getOptionWidthAndHeight()[1]
         y_2 = self._getSettingBounds()[1] - self._getOptionWidthAndHeight()[1]
         d.swipe(x, y_1, x, y_2)
+        time.sleep(2)
 
     def _slideOptionLeftToRight(self,optiontext,diffindex):
         # --->>>
@@ -282,6 +283,7 @@ class SetOption():
         y   = self._getOptionOrdinate(optiontext)
         x_i = self._getOptionWidthAndHeight()[0] * (diffindex - 1)
         d.swipe(x_1, y, x_2 + x_i, y)
+        time.sleep(2)
 
     def _slideOptionRightToLeft(self,optiontext,diffindex):
         # <<<---
@@ -290,6 +292,7 @@ class SetOption():
         y   = self._getOptionOrdinate(optiontext)
         x_i = self._getOptionWidthAndHeight()[0] * (diffindex - 1)
         d.swipe(x_1, y, x_2 - x_i, y)
+        time.sleep(2)
 
     def setCameraOption(self,optiontext,option):
         '''
@@ -300,12 +303,15 @@ class SetOption():
                 You may need use the arguements that have been defined at the top of this file
         '''
         d(resourceId = 'com.intel.camera22:id/camera_settings').click.wait()
-        while d(text = optiontext).wait.gone(timeout = 2000):
+        trytimes = 1
+        while d(text = optiontext).wait.gone(timeout = 2000) and trytimes < 5:
             self._slideSettingListUp()
+            trytimes = trytimes + 1
         newoptiontext = optiontext.replace(' ', '_')
         cated_0_0 = int(commands.getoutput('adb shell cat /data/data/com.intel.camera22/shared_prefs/com.intel.camera22_preferences_0_0.xml | wc -l'))
+        cated_0 = int(commands.getoutput('adb shell cat /data/data/com.intel.camera22/shared_prefs/com.intel.camera22_preferences_0.xml | wc -l'))
         #If it is the first time launching camera, there are only 4 lines in _0_0.xml. Need more logic.
-        if cated_0_0 > 4:
+        if cated_0_0 > 4 or cated_0 > 9:
             #Get the current option
             if newoptiontext not in SETTINGS_0:
                 stringcated = commands.getoutput('adb shell cat /data/data/com.intel.camera22/shared_prefs/com.intel.camera22_preferences_0_0.xml | grep %s' %DICT_OPTION_KEY[newoptiontext])
@@ -345,6 +351,20 @@ class SetOption():
             else:
                 #Neither higher nor lower than the target option, that means the current option is just the target one.
                 d(resourceId = 'com.intel.camera22:id/mini_layout_view').click.wait()
+        oldoption    = DICT_OPTION_NAME[newoptiontext].index(DEFAULT_OPTION[newoptiontext])
+        targetoption = DICT_OPTION_NAME[newoptiontext].index(option)
+        if oldoption != targetoption:
+            if newoptiontext not in SETTINGS_0:
+                resultoption = commands.getoutput('adb shell cat /data/data/com.intel.camera22/shared_prefs/com.intel.camera22_preferences_0_0.xml | grep %s' %DICT_OPTION_KEY[newoptiontext])
+                if resultoption.find(option) == -1:
+                    raise Exception('Set camera setting <' + optiontext + '> to <' + option + '> failed')
+            else:
+                resultoption = commands.getoutput('adb shell cat /data/data/com.intel.camera22/shared_prefs/com.intel.camera22_preferences_0.xml | grep %s' %DICT_OPTION_KEY[newoptiontext])
+                if resultoption.find(option) == -1:
+                    raise Exception('Set camera setting <' + optiontext + '> to <' + option + '> failed')
+        else:
+            #If the current option is the default one, there is no need for confirmation
+            pass
 
 class TouchButton():
 
@@ -406,14 +426,18 @@ class TouchButton():
             print('Current camera is ' + status)
     
     def confirmSettingMode(self,sub_mode,option):
-        if sub_mode == 'Geo Location':
-            result = commands.getoutput('adb shell cat /data/data/com.intel.camera22/shared_prefs/com.intel.camera22_preferences_0.xml | grep '+ sub_mode)
-            if result.find(option) == -1:
-                raise Exception('set camera setting ' + sub_mode + ' to ' + option + ' failed')
-        else:
-            result = commands.getoutput('adb shell cat /data/data/com.intel.camera22/shared_prefs/com.intel.camera22_preferences_0_0.xml | grep ' + sub_mode)
-            if result.find(option) == -1:
-                raise Exception('set camera setting ' + sub_mode + ' to ' + option + ' failed')            
+        mode = sub_mode.replace(' ', '_')
+        if option == DEFAULT_OPTION[mode]:
+            print ('current is '+ sub_mode + option +' mode' )
+        else:            
+            if mode not in SETTINGS_0:
+                result = commands.getoutput('adb shell cat /data/data/com.intel.camera22/shared_prefs/com.intel.camera22_preferences_0_0.xml | grep ' + DICT_OPTION_KEY[mode])
+                if result.find(option) == -1:
+                    raise Exception('set camera setting ' + mode + ' to ' + option + ' failed') 
+            else:
+                result = commands.getoutput('adb shell cat /data/data/com.intel.camera22/shared_prefs/com.intel.camera22_preferences_0.xml | grep '+ DICT_OPTION_KEY[mode])
+                if result.find(option) == -1:
+                    raise Exception('set camera setting ' + mode + ' to ' + option + ' failed')             
     
     def confirmCameraMode(self,mode):
         mode_index = CONFIRM_MODE_LIST.index(mode) -1
@@ -423,7 +447,7 @@ class TouchButton():
             raise Exception('set camera '+mode +' mode fail')
 
 
-    def captureAndCheckPicCount(self,capturemode,delaytime = 1):
+    def captureAndCheckPicCount(self,capturemode,delaytime=0):
         d = { 'single':'jpg', 'video':'mp4', 'smile':'jpg', 'longclick':'jpg'} 
         beforeNo = commands.getoutput('adb shell ls /sdcard/DCIM/100ANDRO/* | grep '+ d[capturemode] +' | wc -l') #Get count before capturing
         if capturemode == 'video':
@@ -435,7 +459,7 @@ class TouchButton():
         result = commands.getoutput('adb shell cat /data/data/com.intel.camera22/shared_prefs/mode_selected.xml| grep \'value="3"\'')
         if result.find('value="3"') != -1:
             if string.atoi(beforeNo) != string.atoi(afterNo) - 10:
-                raise Exception('Taking picture/video failed!')
+               raise Exception('Taking picture/video failed!')
         else:
             if string.atoi(beforeNo) == string.atoi(afterNo) :#If the count does not raise up after capturing, case failed
                 raise Exception('Taking picture/video failed!')
