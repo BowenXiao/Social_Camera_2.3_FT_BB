@@ -382,7 +382,7 @@ class CameraTest(unittest.TestCase):
         4.Exit  activity
         """
         # Step 2 Set Self-timer off
-        so.setCameraOption('Self_Timer','0')
+        so.setCameraOption('Self Timer','0')
         #tb.confirmSettingMode('delay_shooting','0')
         # Step 3 Touch shutter button to capture picture and confirm picture count + 1.
         tb.captureAndCheckPicCount('single')
@@ -398,7 +398,7 @@ class CameraTest(unittest.TestCase):
         4.Exit  activity
         """
         # Step 2 Set Self-timer 3s
-        so.setCameraOption('Self_Timer','3')
+        so.setCameraOption('Self Timer','3')
         #tb.confirmSettingMode('delay_shooting','3')
         # Step 3 Touch shutter button to capture picture and confirm picture count + 1.
         tb.captureAndCheckPicCount('single',5)
@@ -414,7 +414,7 @@ class CameraTest(unittest.TestCase):
         4.Exit  activity
         """
         # Step 2 Set Self-timer 5s
-        so.setCameraOption('Self_Timer','5')
+        so.setCameraOption('Self Timer','5')
         #tb.confirmSettingMode('delay_shooting','5')
         # Step 3 Touch shutter button to capture picture and confirm picture count + 1.
         tb.captureAndCheckPicCount('single',7)
@@ -430,7 +430,7 @@ class CameraTest(unittest.TestCase):
         4.Exit  activity
         """
         # Step 2 Set Self-timer 10s
-        so.setCameraOption('Self_Timer','10')
+        so.setCameraOption('Self Timer','10')
         #tb.confirmSettingMode('delay_shooting','10')
         # Step 3 Touch shutter button to capture picture and confirm picture count + 1.
         tb.captureAndCheckPicCount('single',12)
