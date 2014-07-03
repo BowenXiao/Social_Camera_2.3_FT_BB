@@ -169,7 +169,7 @@ class CameraTest(unittest.TestCase):
                 4.Exit  activity
         """
         so.setCameraOption('Self Timer','3')
-        tb.captureAndCheckPicCount('single')
+        tb.captureAndCheckPicCount('single',3)
 
     def testCapturePictureWithFiveSec(self):
         """
@@ -180,7 +180,7 @@ class CameraTest(unittest.TestCase):
                 4.Exit  activity
         """
         so.setCameraOption('Self Timer','5')
-        tb.captureAndCheckPicCount('single')
+        tb.captureAndCheckPicCount('single',5)
 
     def testCapturePictureWithTenSec(self):
         """
@@ -191,7 +191,7 @@ class CameraTest(unittest.TestCase):
                 4.Exit  activity
         """
         so.setCameraOption('Self Timer','10')
-        tb.captureAndCheckPicCount('single')
+        tb.captureAndCheckPicCount('single',10)
 
     def _launchCamera(self):
         d.start_activity(component = ACTIVITY_NAME)
