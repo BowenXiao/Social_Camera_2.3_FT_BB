@@ -230,13 +230,14 @@ class SetCaptureMode():
         if tg_mode < 0:
             for i in range(abs(tg_mode)):
                 # mode image coordinate: right_x_coordinate = 2252 left_x_coordinate = 2252. swipe from right to left.
-                d.swipe(2120,1044,2252,1044)        
+                d.swipe(2120,1044,2252,1044)
         if tg_mode == 0:
-            print ('creent is ' + mode ' mode')      
+            print ('current is ' + mode + ' mode')
         if tg_mode > 0:
             for i in range(tg_mode):
                 # mode image coordinate: right_x_coordinate = 2252 left_x_coordinate = 2252. swipe from right to left.
                 d.swipe(2252,1044,2120,1044)
+
     def _clickCaptureMode(self):
         # mode image center coordinate (2195,975)
         d.click(2195,975)
