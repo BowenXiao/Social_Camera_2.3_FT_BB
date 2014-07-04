@@ -29,7 +29,6 @@ class CameraTest(unittest.TestCase):
         assert d(resourceId = 'com.intel.camera22:id/shutter_button'),'Launch camera failed!!'
         sm.switchCaptureMode('smile')
 
-
     def tearDown(self):
         super(CameraTest,self).tearDown()
         #4.Exit  activity
