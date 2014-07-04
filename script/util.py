@@ -230,7 +230,7 @@ class SetCaptureMode():
         cmode=b[b.index('"')+1:b.rindex('"')]
         dmode=int(cmode) + 2
         tmode = CONFIRM_MODE_LIST.index(mode) +1
-        tg_mode =tmode - dmode       
+        tg_mode =tmode - dmode
         if tg_mode < 0:
             for i in range(abs(tg_mode)):
                 # mode image coordinate: right_x_coordinate = 2252 left_x_coordinate = 2252. swipe from right to left.
@@ -251,6 +251,9 @@ class SetCaptureMode():
         Usage: This method is used to switch social camera 2.3 capture mode.
         e.g. SetCaptureMode.switchCaptureMode('single')
         '''
+        d(description = 'Show switch camera mode list').click.wait()
+        d.click(2195,910)
+        time.sleep(1)
         d(description = 'Show switch camera mode list').click.wait()
         if mode == 'smile' or mode == 'hdr':
             d(text = POP_MODE[mode]).click.wait()
@@ -329,7 +332,7 @@ class SetOption():
         newoptiontext = optiontext.replace(' ', '_')
         cated_0_0 = int(commands.getoutput('adb shell cat /data/data/com.intel.camera22/shared_prefs/com.intel.camera22_preferences_0_0.xml | wc -l'))
         cated_0 = int(commands.getoutput('adb shell cat /data/data/com.intel.camera22/shared_prefs/com.intel.camera22_preferences_0.xml | wc -l'))
-        print '_0_0.xml wc -l \= ' + cated_0_0 + ' and _0.xml wc -l \= ' + cated_0
+        #print '_0_0.xml wc -l = %s' %cated_0_0 + ' and _0.xml wc -l = %s' %cated_0
         #If it is the first time launching camera, there are only 4 lines in _0_0.xml. Need more logic.
         if cated_0_0 <= 4 or cated_0 <= 9:
             currentoption = DEFAULT_OPTION[newoptiontext]
