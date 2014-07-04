@@ -48,7 +48,7 @@ class CameraTest(unittest.TestCase):
                 4.Exit  activity
         '''
         so.setCameraOption('Exposure','0')
-        tb.captureAndCheckPicCount('single',3)
+        tb.captureAndCheckPicCount('single',10)
 
     def testCaptureWithExposurePlugOne(self):
         '''
@@ -60,7 +60,7 @@ class CameraTest(unittest.TestCase):
                 4.Exit  activity
         '''
         so.setCameraOption('Exposure','3')
-        tb.captureAndCheckPicCount('single',3)
+        tb.captureAndCheckPicCount('single',10)
 
     def testCaptureWithExposurePlugTwo(self):
         '''
@@ -72,7 +72,7 @@ class CameraTest(unittest.TestCase):
                 4.Exit  activity
         '''
         so.setCameraOption('Exposure','6')
-        tb.captureAndCheckPicCount('single',3)
+        tb.captureAndCheckPicCount('single',10)
 
     def testCaptureWithExposureRedOne(self):
         '''
@@ -84,7 +84,7 @@ class CameraTest(unittest.TestCase):
                 4.Exit  activity
         '''
         so.setCameraOption('Exposure','-3')
-        tb.captureAndCheckPicCount('single',3)
+        tb.captureAndCheckPicCount('single',10)
 
     def testCaptureWithExposureRedTwo(self):
         '''
@@ -96,7 +96,7 @@ class CameraTest(unittest.TestCase):
                 4.Exit  activity
         '''
         so.setCameraOption('Exposure','-6')
-        tb.captureAndCheckPicCount('single',3)
+        tb.captureAndCheckPicCount('single',10)
 
     def testCapturePictureWithScenesAuto(self):
         '''
@@ -108,7 +108,7 @@ class CameraTest(unittest.TestCase):
                 4.Exit  activity
         '''
         so.setCameraOption('Scenes','auto')
-        tb.captureAndCheckPicCount('single',3)
+        tb.captureAndCheckPicCount('single',10)
 
     def testCapturePictureWithScenesSports(self):
         '''
@@ -120,7 +120,7 @@ class CameraTest(unittest.TestCase):
                 4.Exit  activity
         '''
         so.setCameraOption('Scenes','sports')
-        tb.captureAndCheckPicCount('single',3)
+        tb.captureAndCheckPicCount('single',10)
 
     def testCapturePictureWithScenesNight(self):
         '''
@@ -132,7 +132,7 @@ class CameraTest(unittest.TestCase):
                 4.Exit  activity
         '''
         so.setCameraOption('Scenes','night')
-        tb.captureAndCheckPicCount('single',3)
+        tb.captureAndCheckPicCount('single',10)
 
     def testCapturePictureWithScenesLandscape(self):
         '''
@@ -144,7 +144,7 @@ class CameraTest(unittest.TestCase):
                 4.Exit  activity
         '''
         so.setCameraOption('Scenes','landscape')
-        tb.captureAndCheckPicCount('single',3)
+        tb.captureAndCheckPicCount('single',10)
 
     def testCapturePictureWithScenesPortrait(self):
         '''
@@ -156,7 +156,7 @@ class CameraTest(unittest.TestCase):
                 4.Exit  activity
         '''
         so.setCameraOption('Scenes','portrait')
-        tb.captureAndCheckPicCount('single',3)
+        tb.captureAndCheckPicCount('single',10)
 
     def testCapturePictureWithScenesNightPortrait(self):
         '''
@@ -168,7 +168,7 @@ class CameraTest(unittest.TestCase):
                 4.Exit  activity
         '''
         so.setCameraOption('Scenes','night-portrait')
-        tb.captureAndCheckPicCount('single',3)
+        tb.captureAndCheckPicCount('single',10)
 
     def testCapturePictureWithSizeWidescreen(self):
         '''
@@ -180,7 +180,7 @@ class CameraTest(unittest.TestCase):
                 4.Exit  activity
         '''
         so.setCameraOption('Picture Size','WideScreen')
-        tb.captureAndCheckPicCount('single',3)
+        tb.captureAndCheckPicCount('single',10)
 
     def testCapturePictureWithSizeStandard(self):
         '''
@@ -192,7 +192,7 @@ class CameraTest(unittest.TestCase):
                 4.Exit  activity
         '''
         so.setCameraOption('Picture Size','StandardScreen')
-        tb.captureAndCheckPicCount('single',3)
+        tb.captureAndCheckPicCount('single',10)
     
     def testCapturepictureWithGeoLocationOn(self):
         '''
@@ -204,7 +204,7 @@ class CameraTest(unittest.TestCase):
                 4.Exit  activity
         '''
         so.setCameraOption('Geo Location','on')
-        tb.captureAndCheckPicCount('single',3)
+        tb.captureAndCheckPicCount('single',10)
 
     def testCapturepictureWithGeoLocationOff(self):
         '''
@@ -216,7 +216,7 @@ class CameraTest(unittest.TestCase):
                 4.Exit  activity
         '''
         so.setCameraOption('Geo Location','off')
-        tb.captureAndCheckPicCount('single',3)
+        tb.captureAndCheckPicCount('single',10)
 
     def _captureAndCheckPicCount(self,capturemode,delaytime):
         beforeNo = AD.cmd('ls','/sdcard/DCIM/100ANDRO') #Get count before capturing
