@@ -259,6 +259,7 @@ class SetCaptureMode():
             d(text = POP_MODE[mode]).click.wait()
         else:
             self._swipeCaptureList(mode)
+            time.sleep(1)
             self._clickCaptureMode()
 
 class SetOption():
@@ -328,8 +329,21 @@ class SetOption():
         newoptiontext = optiontext.replace(' ', '_')
         cated_0_0 = int(commands.getoutput('adb shell cat /data/data/com.intel.camera22/shared_prefs/com.intel.camera22_preferences_0_0.xml | wc -l'))
         cated_0 = int(commands.getoutput('adb shell cat /data/data/com.intel.camera22/shared_prefs/com.intel.camera22_preferences_0.xml | wc -l'))
+        print '_0_0.xml wc -l \= ' + cated_0_0 + ' and _0.xml wc -l \= ' + cated_0
         #If it is the first time launching camera, there are only 4 lines in _0_0.xml. Need more logic.
-        if cated_0_0 > 4 or cated_0 > 9:
+        if cated_0_0 <= 4 or cated_0 <= 9:
+            currentoption = DEFAULT_OPTION[newoptiontext]
+            currentindex = DICT_OPTION_NAME[newoptiontext].index(currentoption)
+            targetindex  = DICT_OPTION_NAME[newoptiontext].index(option)
+            diffindex = abs(currentindex - targetindex)
+            if currentindex > targetindex:
+                self._slideOptionLeftToRight(optiontext, diffindex)
+            elif currentindex < targetindex:
+                self._slideOptionRightToLeft(optiontext, diffindex)
+            else:
+                #Neither higher nor lower than the target option, that means the current option is just the target one.
+                d(resourceId = 'com.intel.camera22:id/mini_layout_view').click.wait()
+        else:
             #Get the current option
             if newoptiontext == 'Video_Size':
                 stringcatedone = commands.getoutput('adb shell cat /data/data/com.intel.camera22/shared_prefs/com.intel.camera22_preferences_0_0.xml | grep %s' %DICT_OPTION_KEY[newoptiontext][0])
@@ -364,18 +378,6 @@ class SetOption():
                 else:
                     #Neither higher nor lower than the target option, that means the current option is just the target one.
                     d(resourceId = 'com.intel.camera22:id/mini_layout_view').click.wait()
-        else:
-            currentoption = DEFAULT_OPTION[newoptiontext]
-            currentindex = DICT_OPTION_NAME[newoptiontext].index(currentoption)
-            targetindex  = DICT_OPTION_NAME[newoptiontext].index(option)
-            diffindex = abs(currentindex - targetindex)
-            if currentindex > targetindex:
-                self._slideOptionLeftToRight(optiontext, diffindex)
-            elif currentindex < targetindex:
-                self._slideOptionRightToLeft(optiontext, diffindex)
-            else:
-                #Neither higher nor lower than the target option, that means the current option is just the target one.
-                d(resourceId = 'com.intel.camera22:id/mini_layout_view').click.wait()
         oldoption    = DICT_OPTION_NAME[newoptiontext].index(DEFAULT_OPTION[newoptiontext])
         targetoption = DICT_OPTION_NAME[newoptiontext].index(option)
         if oldoption != targetoption:
