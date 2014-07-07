@@ -104,8 +104,8 @@ script.continuous.CameraTest.testContinuousCapturepictureWithWhiteBalanceFluores
 script.continuous.CameraTest.testCapturepictureWithWhiteBalanceCloudy= 1
 script.continuous.CameraTest.testCapturePictureWithFDOff= 1
 script.continuous.CameraTest.testContinuousCapturePictureWithFDON= 1
-script.continuous.CameraTest.testCapturepictureWithGeoLocationOn= 1
-script.continuous.CameraTest.testCapturepictureWithGeoLocationOff= 1
+#script.continuous.CameraTest.testCapturepictureWithGeoLocationOn= 1
+#script.continuous.CameraTest.testCapturepictureWithGeoLocationOff= 1
 script.perfectshot.CameraTest.testPerfectShotCaptureWithExposureAuto= 1
 script.perfectshot.CameraTest.testPerfectShotCaptureWithExposurePlusOne= 1
 script.perfectshot.CameraTest.testPerfectShotCaptureWithExposurePlusTwo= 1
