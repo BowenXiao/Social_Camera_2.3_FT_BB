@@ -274,7 +274,7 @@ class SetOption():
         return optiony
 
     def _getOptionWidthAndHeight(self):
-        optionbounds = d(resourceId = 'com.intel.camera22:id/rl').info.get('bounds')
+        optionbounds = d(resourceId = 'com.intel.camera22:id/setting_value_icon').info.get('bounds')
         optionwidth  = (optionbounds['right'] - optionbounds['left'])
         optionheight = (optionbounds['bottom'] - optionbounds['top'])
         return optionwidth, optionheight
@@ -346,7 +346,8 @@ class SetOption():
                 self._slideOptionRightToLeft(optiontext, diffindex)
             else:
                 #Neither higher nor lower than the target option, that means the current option is just the target one.
-                d(resourceId = 'com.intel.camera22:id/mini_layout_view').click.wait()
+                #d(resourceId = 'com.intel.camera22:id/mini_layout_view').click.wait()
+                d.click(1000,500)
         else:
             #Get the current option
             if newoptiontext == 'Video_Size':
