@@ -274,7 +274,7 @@ class SetOption():
         return optiony
 
     def _getOptionWidthAndHeight(self):
-        optionbounds = d(resourceId = 'com.intel.camera22:id/setting_value_icon').info.get('bounds')
+        optionbounds = d(className = 'android.widget.RelativeLayout', index = '4').info.get('bounds')
         optionwidth  = (optionbounds['right'] - optionbounds['left'])
         optionheight = (optionbounds['bottom'] - optionbounds['top'])
         return optionwidth, optionheight
@@ -288,7 +288,7 @@ class SetOption():
         return rightx, topy, bottomy, centerx
 
     def _getFirstItem(self):
-        optionbounds = d(resourceId = 'com.intel.camera22:id/rl').info.get('bounds')
+        optionbounds = d(resourceId = 'com.intel.camera22:id/setting_value_icon').info.get('bounds')
         xfirstitem   = (optionbounds['left'] + optionbounds['right'])/2
         return xfirstitem
 
@@ -340,10 +340,13 @@ class SetOption():
             currentindex = DICT_OPTION_NAME[newoptiontext].index(currentoption)
             targetindex  = DICT_OPTION_NAME[newoptiontext].index(option)
             diffindex = abs(currentindex - targetindex)
-            if currentindex > targetindex:
-                self._slideOptionLeftToRight(optiontext, diffindex)
-            elif currentindex < targetindex:
-                self._slideOptionRightToLeft(optiontext, diffindex)
+            # if currentindex > targetindex:
+            #     self._slideOptionLeftToRight(optiontext, diffindex)
+            # elif currentindex < targetindex:
+            #     self._slideOptionRightToLeft(optiontext, diffindex)
+            if currentindex != targetindex:
+                d.click(self._getFirstItem() + self._getOptionWidthAndHeight()[0] * targetindex, self._getOptionOrdinate(optiontext))
+                d.click(1000,500)
             else:
                 #Neither higher nor lower than the target option, that means the current option is just the target one.
                 #d(resourceId = 'com.intel.camera22:id/mini_layout_view').click.wait()
@@ -372,8 +375,8 @@ class SetOption():
             if settinglayout.find('Large')!= -1:
                 if currentindex != targetindex:
                     d.click(self._getFirstItem() + self._getOptionWidthAndHeight()[1] * targetindex, self._getOptionOrdinate(optiontext))
-                else:
-                    d(resourceId = 'com.intel.camera22:id/mini_layout_view').click.wait()
+                # else:
+                    # d(resourceId = 'com.intel.camera22:id/mini_layout_view').click.wait()
             else:
                 #If current option is just the target option, do nothing('pass').
                 if currentindex > targetindex:
@@ -387,16 +390,19 @@ class SetOption():
         targetoption = DICT_OPTION_NAME[newoptiontext].index(option)
         if oldoption != targetoption:
             if newoptiontext == 'Video_Size':
+                time.sleep(2)
                 resultone = commands.getoutput('adb shell cat /data/data/com.intel.camera22/shared_prefs/com.intel.camera22_preferences_0_0.xml | grep %s' %DICT_OPTION_KEY[newoptiontext][0])
                 resulttwo = commands.getoutput('adb shell cat /data/data/com.intel.camera22/shared_prefs/com.intel.camera22_preferences_0_0.xml | grep %s' %DICT_OPTION_KEY[newoptiontext][1])
                 if resultone.find(option[0]) == -1 or resulttwo.find(option[1]) == -1:
                     raise Exception('Set camera setting <' + optiontext + '> failed')
             else:
                 if newoptiontext not in SETTINGS_0:
+                    time.sleep(2)
                     resultoption = commands.getoutput('adb shell cat /data/data/com.intel.camera22/shared_prefs/com.intel.camera22_preferences_0_0.xml | grep %s' %DICT_OPTION_KEY[newoptiontext])
                     if resultoption.find(option) == -1:
                         raise Exception('Set camera setting <' + optiontext + '> to <' + option + '> failed')
                 else:
+                    time.sleep(2)
                     resultoption = commands.getoutput('adb shell cat /data/data/com.intel.camera22/shared_prefs/com.intel.camera22_preferences_0.xml | grep %s' %DICT_OPTION_KEY[newoptiontext])
                     if resultoption.find(option) == -1:
                         raise Exception('Set camera setting <' + optiontext + '> to <' + option + '> failed')
