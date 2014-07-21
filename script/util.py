@@ -18,12 +18,30 @@ ADB_DEVICES    = ADB + ' devices'
 ANDROID_SERIAL ='ANDROID_SERIAL'
 ##################################################################################################################
 #SetCaptureMode() Class variable
-MODE_LIST = ['single','depth','panorama','burst','perfectshot','video']
+MODE_LIST = ['video','single','depth','panorama','burst','perfectshot']
 POP_MODE  = {'smile':"Smile\nOFF",
              'hdr':"HDR\nOFF",
              'burstfast':'FAST',
              'burstslow':'SLOW'
              }
+######################################################################################################################################
+Mode   = {'9':'video',
+          '1':'single',
+          '11':'depth',
+          '12':'panorama',
+          '5':'burst',
+          '7':'perfectshot'}
+
+ 
+SMode_List   = {'video':'video',
+                 'single':'single',
+                 'depth':'depth',
+                 'panorama':'panorama',
+                 'burst':'burst',
+                 'perfectshot':'perfectshot'}        
+
+
+
 ##################################################################################################################
 #SetOption() Class variable
 Exposure          = ['-6','-3','0','3','6'] #_0_0
@@ -223,14 +241,15 @@ class Adb():
 class SetCaptureMode():
 
     def _swipeCaptureList(self,mode): 
-        mode_index = CONFIRM_MODE_LIST.index(mode) -1        
+        mode_index = CONFIRM_MODE_LIST.index(mode)    
         result = commands.getoutput('adb shell cat /data/data/com.intel.camera22/shared_prefs/mode_selected.xml| grep currentMode')
-        a=str(result)
-        b=a[a.index('value="')+1:a.rindex('/')]
-        cmode=b[b.index('"')+1:b.rindex('"')]
-        dmode=int(cmode) + 2
-        tmode = CONFIRM_MODE_LIST.index(mode) +1
-        tg_mode =tmode - dmode
+        a = str(result)
+        b = a[a.index('value="') + 1:a.rindex('/')]
+        cmode = b[b.index('"') + 1:b.rindex('"')]
+        cmodenew = int(cmode)
+        modenew = Mode[cmode]
+        currentindex = CONFIRM_MODE_LIST.index(modenew)
+        tg_mode = currentindex - mode_index
         if tg_mode < 0:
             for i in range(abs(tg_mode)):
                 # mode image coordinate: right_x_coordinate = 2252 left_x_coordinate = 2252. swipe from right to left.
