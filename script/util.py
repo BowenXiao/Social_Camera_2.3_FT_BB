@@ -18,7 +18,7 @@ ADB_DEVICES    = ADB + ' devices'
 ANDROID_SERIAL ='ANDROID_SERIAL'
 ##################################################################################################################
 #SetCaptureMode() Class variable
-MODE_LIST = ['video','single','depth','panorama','burst','perfectshot']
+MODE_LIST = ['single','depth','panorama','burst','perfectshot','video']
 POP_MODE  = {'smile':"Smile\nOFF",
              'hdr':"HDR\nOFF",
              'burstfast':'FAST',
@@ -249,13 +249,13 @@ class SetCaptureMode():
         cmodenew = int(cmode)
         modenew = Mode[cmode]
         currentindex = CONFIRM_MODE_LIST.index(modenew)
-        tg_mode = currentindex - mode_index
+        tg_mode =  mode_index -currentindex
         if tg_mode < 0:
             for i in range(abs(tg_mode)):
                 # mode image coordinate: right_x_coordinate = 2252 left_x_coordinate = 2252. swipe from right to left.
                 d.swipe(2120,944,2252,944)
         if tg_mode == 0:
-            print ('current is ' + mode + ' mode')
+            #print ('current is ' + mode + ' mode')
             d.press('back')
         if tg_mode > 0:
             for i in range(tg_mode):
