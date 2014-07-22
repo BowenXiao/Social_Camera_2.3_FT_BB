@@ -503,11 +503,16 @@ class TouchButton():
                     raise Exception('set camera setting ' + mode + ' to ' + option + ' failed')             
     
     def confirmCameraMode(self,mode):
-        mode_index = CONFIRM_MODE_LIST.index(mode) -1
-        mode_new   = str(mode_index)
-        result = commands.getoutput('adb shell cat /data/data/com.intel.camera22/shared_prefs/mode_selected.xml| grep \'value="%s"\''%mode_new)
-        if result.find(mode_new) == -1:
-            raise Exception('set camera '+mode +' mode fail')
+        mode_index = CONFIRM_MODE_LIST.index(mode)    
+        result = commands.getoutput('adb shell cat /data/data/com.intel.camera22/shared_prefs/mode_selected.xml| grep currentMode')
+        a = str(result)
+        b = a[a.index('value="') + 1:a.rindex('/')]
+        cmode = b[b.index('"') + 1:b.rindex('"')]
+        cmodenew = int(cmode)
+        modenew = Mode[cmode]
+        currentindex = CONFIRM_MODE_LIST.index(modenew)
+        if  mode_index != currentindex:
+            raise Exception('set'+ mode ' fail')
 
 
     def captureAndCheckPicCount(self,capturemode,delaytime=0):
