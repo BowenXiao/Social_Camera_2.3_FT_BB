@@ -48,8 +48,6 @@ class CameraTest(unittest.TestCase):
         else:
             assert d(resourceId = 'com.intel.camera22:id/shutter_button'),'Launch camera failed!!'
         sm.switchCaptureMode('perfectshot')   # change panorama mode
-        time.sleep(1)
-        tb.confirmCameraMode('perfectshot')
 
     def tearDown(self):
         super(CameraTest,self).tearDown()
