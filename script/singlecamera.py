@@ -446,7 +446,7 @@ class CameraTest(unittest.TestCase):
         4.Exit  activity
         """
         # Step 2 Set ISO Setting Auto
-        so.setCameraOption('ISO','auto')
+        so.setCameraOption('ISO','iso-auto')
         #tb.confirmSettingMode('iso','iso-auto')
         # Step 3 Touch shutter button to capture picture and confirm picture count + 1.
         tb.captureAndCheckPicCount('single')
