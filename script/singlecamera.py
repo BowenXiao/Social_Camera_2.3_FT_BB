@@ -706,7 +706,38 @@ class CameraTest(unittest.TestCase):
         #tb.confirmSettingMode('fdfr','off')
         # Step 4 Touch shutter button to capture picture and confirm picture count + 1.
         tb.captureAndCheckPicCount('single')
-
+        
+    # Testcase 42
+    def testSwitchDepthModeAndSingleMode(self):
+        """
+        Summary:Switch Depth Mode And Single Mode.
+        Step:
+        1.Launch single capture activity
+        3.Switch to depth mode with single mode
+        """
+        sm.switchCaptureMode('depth')
+        tb.captureAndCheckPicCount('single')        
+        sm.switchCaptureMode('single')
+        tb.captureAndCheckPicCount('single')
+        sm.switchCaptureMode('depth')
+        tb.captureAndCheckPicCount('single')                    
+        
+        
+    # Testcase 42
+    def testSwitchDepthModeCapture(self):
+        """
+        Summary:Capture image depth mode .
+        Step:
+        1.Launch single capture activity
+        3.Switch to depth mode.
+        3.capture image.
+        """
+        sm.switchCaptureMode('depth')
+        tb.captureAndCheckPicCount('single')        
+       
+        
+###########################################################
+###############################################################
     def _pressBack(self,touchtimes):
         for i in range(1,touchtimes+1):
             d.press('back')
