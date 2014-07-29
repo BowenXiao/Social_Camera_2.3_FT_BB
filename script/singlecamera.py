@@ -723,7 +723,7 @@ class CameraTest(unittest.TestCase):
         tb.captureAndCheckPicCount('single')                    
         
         
-    # Testcase 42
+    # Testcase 43
     def testSwitchDepthModeCapture(self):
         """
         Summary:Capture image depth mode .
