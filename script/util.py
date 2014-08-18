@@ -264,7 +264,7 @@ class SetCaptureMode():
 
     def _clickCaptureMode(self):
         # mode image center coordinate (2195,975)
-        d.click(2195,910)
+        d.click(2195,970)
 
     def switchCaptureMode(self,mode):
         '''
@@ -272,7 +272,7 @@ class SetCaptureMode():
         e.g. SetCaptureMode.switchCaptureMode('single')
         '''
         d(description = 'Show switch camera mode list').click.wait()
-        d.click(2195,910)
+        d.click(2195,970)
         time.sleep(1)
         d(description = 'Show switch camera mode list').click.wait()
         if mode == 'smile' or mode == 'hdr':
